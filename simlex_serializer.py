@@ -10,7 +10,7 @@ with open('SimLex-999/SimLex-999.txt') as f:
     for line in f.readlines():
         if firstline:
             firstline = False
-            continue;
+            continue
         line = line.replace('\n', '')
         line = line.split('\t')
         objList.append(simlexObj(line[0],line[1],line[2],line[3],line[4],line[5],line[6],line[7],line[8],line[9]))
