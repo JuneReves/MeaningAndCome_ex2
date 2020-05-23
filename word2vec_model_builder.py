@@ -1,3 +1,5 @@
+#This should only be ran once to create the word2vec objects
+
 import gensim
 import pickle
 from datetime import datetime
