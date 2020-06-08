@@ -13,11 +13,11 @@ def read_corp(corpus):
         sentences = []
         cur_sent = []
         for line in f.readlines():
-            line = line.strip()
-            if line == '</s>':
+            line = line.split('\t')[0]
+            if '</s>' in line:
                 sentences.append(cur_sent)
                 cur_sent = []
-            elif line == '<s>' or line.startswith('<text'):
+            elif '<s>' in line or line.startswith('<text>'):
                 continue
             else:
                 cur_sent.append(line)
@@ -43,34 +43,38 @@ s = datetime.now()
 
 modelW10S100 = build_word2vec_object(5, 10, 100, sentences)
 print('built model 10 100 in ', (datetime.now() - s))
-
-s = datetime.now()
-
-modelW2S100 = build_word2vec_object(5, 2, 100, sentences)
-print('built model 2 100 in ', (datetime.now() - s))
-
-s = datetime.now()
-
-modelW10S1000 = build_word2vec_object(5, 10, 1000, sentences)
-print('built model 10 1000 in ', (datetime.now() - s))
-
-s = datetime.now()
-
-modelW2S1000 = build_word2vec_object(5, 2, 1000, sentences)
-print('built model 2 1000 in ', (datetime.now() - s))
-
-
-outputfile = 'word2vec_models'
-with open(outputfile, 'wb') as output:
+with open('w10s100', 'wb') as output:
     s = datetime.now()
     pickle.dump(modelW10S100, output, pickle.HIGHEST_PROTOCOL)
     print('saved model 10 100 in ', (datetime.now() - s))
+del(modelW10S100) 
+
+
+s = datetime.now()
+modelW2S100 = build_word2vec_object(5, 2, 100, sentences)
+print('built model 2 100 in ', (datetime.now() - s))
+with open('w2s100', 'wb') as output:
     s = datetime.now()
     pickle.dump(modelW2S100, output, pickle.HIGHEST_PROTOCOL)
     print('saved model 2 100 in ', (datetime.now() - s))
+del(modelW2S100)
+
+
+s = datetime.now()
+modelW10S1000 = build_word2vec_object(5, 10, 1000, sentences)
+print('built model 10 1000 in ', (datetime.now() - s))
+with open('w10s1000', 'wb') as output:
     s = datetime.now()
     pickle.dump(modelW10S1000, output, pickle.HIGHEST_PROTOCOL)
     print('saved model 10 1000 in ', (datetime.now() - s))
+del(modelW10S1000)
+
+
+s = datetime.now()
+modelW2S1000 = build_word2vec_object(5, 2, 1000, sentences)
+print('built model 2 1000 in ', (datetime.now() - s))
+with open('w2s1000', 'wb') as output:
     s = datetime.now()
     pickle.dump(modelW2S1000, output, pickle.HIGHEST_PROTOCOL)
     print('saved model 2 1000 in ', (datetime.now() - s))
+del(modelW2S1000)
