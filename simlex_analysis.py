@@ -3,12 +3,14 @@ import gensim.models.word2vec as word2vec
 from simlexobj import simlexObj
 import csv
 
+#for the csv we will write later
 titles = ['word1', 'word2', 'POS', 'SimLex999', 'conc(w1)', 'conc(w2)', 'concQ', 'Assoc(USF)', 'SimAssoc333', 'SD(SimLex)', 'sim2W100S', 'sim10W100S', 'sim2W1000S', 'sim10W1000S']
 
-
+#open all the simlex objects
 with open('simlexObj', 'rb') as input:
     objList = pickle.load(input)
 
+#creating the full list
 lst = [titles]
 for w in objList:
     lst.append([
@@ -24,6 +26,8 @@ for w in objList:
         w.SDSimLex
     ])
 
+
+#Calculating similarities according to each model and then adding them to a list
 similarities = []
 
 with open('w2s100', 'rb') as input:
@@ -82,12 +86,14 @@ for i in range(len(objList)):
 
 del(modelW10S1000)
 
+#integrating the word2vec similarities into the list to become a csv file
 for i in range(len(lst)):
     if i == 0:
         continue
     lst[i] = lst[i] + similarities[i-1]
 
 
+#writing the csv file
 with open('all_data.csv', 'w') as f:
     wr = csv.writer(f, delimiter=',')
     for l in lst:
